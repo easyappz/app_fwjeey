@@ -1,0 +1,129 @@
+get:
+  summary: Get chat messages
+  description: Retrieve chat message history
+  operationId: getMessages
+  isSecure: true
+  tags:
+    - Messages
+  security:
+    - TokenAuth: []
+  parameters:
+    - name: limit
+      in: query
+      description: Number of messages to retrieve
+      schema:
+        type: integer
+        default: 50
+        maximum: 100
+    - name: offset
+      in: query
+      description: Offset for pagination
+      schema:
+        type: integer
+        default: 0
+  responses:
+    '200':
+      description: List of messages
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              results:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    text:
+                      type: string
+                    created_at:
+                      type: string
+                      format: date-time
+                    author:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        username:
+                          type: string
+                        display_name:
+                          type: string
+    '401':
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+post:
+  summary: Send a message
+  description: Send a new message to the chat
+  operationId: sendMessage
+  isSecure: true
+  tags:
+    - Messages
+  security:
+    - TokenAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - text
+          properties:
+            text:
+              type: string
+              description: Message text
+              minLength: 1
+              maxLength: 2000
+  responses:
+    '201':
+      description: Message sent successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              text:
+                type: string
+              created_at:
+                type: string
+                format: date-time
+              author:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  display_name:
+                    type: string
+    '400':
+      description: Invalid input data
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+    '401':
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string

@@ -1,0 +1,62 @@
+post:
+  summary: Register a new user
+  description: Create a new user account with username, display name, and password
+  operationId: registerUser
+  isSecure: false
+  tags:
+    - Authentication
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - username
+            - display_name
+            - password
+          properties:
+            username:
+              type: string
+              description: Unique username for login
+              minLength: 3
+              maxLength: 50
+            display_name:
+              type: string
+              description: Display name shown in chat
+              minLength: 1
+              maxLength: 100
+            password:
+              type: string
+              description: Password for the account
+              minLength: 6
+              maxLength: 128
+  responses:
+    '201':
+      description: User successfully registered
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: Authentication token
+              user:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  display_name:
+                    type: string
+    '400':
+      description: Invalid input data
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string

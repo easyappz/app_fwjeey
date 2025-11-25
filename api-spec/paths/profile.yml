@@ -1,0 +1,91 @@
+get:
+  summary: Get user profile
+  description: Get current user profile information
+  operationId: getProfile
+  isSecure: true
+  tags:
+    - Profile
+  security:
+    - TokenAuth: []
+  responses:
+    '200':
+      description: User profile data
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              username:
+                type: string
+              display_name:
+                type: string
+              created_at:
+                type: string
+                format: date-time
+    '401':
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+patch:
+  summary: Update user profile
+  description: Update user display name
+  operationId: updateProfile
+  isSecure: true
+  tags:
+    - Profile
+  security:
+    - TokenAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            display_name:
+              type: string
+              minLength: 1
+              maxLength: 100
+  responses:
+    '200':
+      description: Profile updated successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              username:
+                type: string
+              display_name:
+                type: string
+              created_at:
+                type: string
+                format: date-time
+    '400':
+      description: Invalid input data
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+    '401':
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string

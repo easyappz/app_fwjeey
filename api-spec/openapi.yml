@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  title: Group Chat API
+  version: 1.0.0
+  description: API for group chat application with registration and authentication
+
+servers:
+  - url: /api
+    description: API server
+
+paths:
+  /auth/register/:
+    $ref: './paths/register.yml'
+  /auth/login/:
+    $ref: './paths/login.yml'
+  /auth/logout/:
+    $ref: './paths/logout.yml'
+  /auth/profile/:
+    $ref: './paths/profile.yml'
+  /messages/:
+    $ref: './paths/messages.yml'
+
+components:
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication (format: 'Token <token>')

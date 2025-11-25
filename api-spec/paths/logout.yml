@@ -1,0 +1,28 @@
+post:
+  summary: Logout user
+  description: Logout current user and invalidate token
+  operationId: logoutUser
+  isSecure: true
+  tags:
+    - Authentication
+  security:
+    - TokenAuth: []
+  responses:
+    '200':
+      description: Successfully logged out
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    '401':
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
